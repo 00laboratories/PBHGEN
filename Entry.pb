@@ -1,10 +1,9 @@
 ; --------------------------------------------
 ;  -- PureBasic Header Generator           --
-;  -- Created by: Henry de Jongh           --
-;  -- Copyright © 00laboratories 2013-2016 --
+;  -- copyright © 00laboratories 2013-2015 --
 ;  -- http://00laboratories.com/           --
 ; --------------------------------------------
-XIncludeFile #PB_Compiler_File + "i" ;- PBHGEN
+;XIncludeFile #PB_Compiler_File + "i" ;- PBHGEN
 
 ;XIncludeFile "Test.pb"
 
@@ -20,22 +19,22 @@ Structure ProgramData
   CurrentState.a          ; global state flag to identify where we are in syntax.
   
   ModuleName$             ; the name of the module when parsing a module.
-  ModuleFileName$         ; the file name to output module data into.
-  ModuleFileHandle.l      ; the file write handle of the module header file.
 EndStructure
 Global Program.ProgramData
 
 Enumeration
   #PBHGEN_STATE_GLOBAL
   #PBHGEN_STATE_PROCEDURE
+  #PBHGEN_STATE_MACRO
   #PBHGEN_STATE_MODULE_GLOBAL
   #PBHGEN_STATE_MODULE_PROCEDURE
+  #PBHGEN_STATE_MODULE_MACRO
 EndEnumeration
 
 Program\CurrentLineNumber = 0
 Program\CurrentState = #PBHGEN_STATE_GLOBAL
 
-#PBHGEN_VERSION$ = "5.41"
+#PBHGEN_VERSION$ = "5.31e"
 
 
 
@@ -202,13 +201,6 @@ Procedure WriteHeader(Str$)
 EndProcedure
 
 ; -----------------------------------------------------------------------------
-; Output a string to the module header file.
-; -----------------------------------------------------------------------------
-Procedure WriteModule(Str$)
-  WriteString(Program\ModuleFileHandle, Str$)
-EndProcedure
-
-; -----------------------------------------------------------------------------
 ; Returns true when this line is a comment otherwise false.
 ; -----------------------------------------------------------------------------
 Procedure IsComment(Line$)
@@ -269,7 +261,7 @@ EndProcedure
 ; Returns true when this is an endprocedure statement line otherwise false.
 ; -----------------------------------------------------------------------------
 Procedure IsEndProcedure(Line$)
-  If LCase(Line$) = "endprocedure"
+  If LCase(Left(Line$, 12)) = "endprocedure"
     ProcedureReturn #True
   EndIf
   ProcedureReturn #False
@@ -290,7 +282,28 @@ EndProcedure
 ; Returns true when this is an endmodule statement line otherwise false.
 ; -----------------------------------------------------------------------------
 Procedure IsEndModule(Line$)
-  If LCase(Line$) = "endmodule"
+  If LCase(Left(Line$, 9)) = "endmodule"
+    ProcedureReturn #True
+  EndIf
+  ProcedureReturn #False
+EndProcedure
+
+; -----------------------------------------------------------------------------
+; Returns true when this is a macro statement line otherwise false.
+; -----------------------------------------------------------------------------
+Procedure IsBeginMacro(Line$)
+  If Not Len(Line$) >= 6 : ProcedureReturn #False : EndIf ; don't bother when it's too small, speed!
+  If LCase(Left(Line$, 6)) = "macro "
+    ProcedureReturn #True
+  EndIf
+  ProcedureReturn #False
+EndProcedure
+
+; -----------------------------------------------------------------------------
+; Returns true when this is an endmacro statement line otherwise false.
+; -----------------------------------------------------------------------------
+Procedure IsEndMacro(Line$)
+  If LCase(Left(Line$, 8)) = "endmacro"
     ProcedureReturn #True
   EndIf
   ProcedureReturn #False
@@ -335,6 +348,7 @@ Procedure ParseLine(Line$)
     WriteHeader(";- PBHGEN V" + #PBHGEN_VERSION$ + " [http://00laboratories.com/]" + #CRLF$)
     WriteHeader(";- '" + GetFilePart(Program\SourceFileName$) + "' header, generated at " + FormatDate("%hh:%ii:%ss %dd.%mm.%yyyy", Date()) + "." + #CRLF$)
     WriteHeader(#CRLF$)
+    WriteHeader("CompilerIf #PB_Compiler_Module = " + #DQUOTE$ + #DQUOTE$ + #CRLF$)
   Else
     ; Leave out empty lines regardless.
     If Not IsEmpty(Line$)
@@ -354,12 +368,17 @@ Procedure ParseLine(Line$)
           If IsBeginModule(Line$)
             Program\CurrentState = #PBHGEN_STATE_MODULE_GLOBAL
             Program\ModuleName$ = ParseModuleName(Line$)
-            Program\ModuleFileName$ = Left(Program\HeaderFileName$, Len(Program\HeaderFileName$) -1) + "." + Program\ModuleName$ + ".pbi"
-            WriteHeader("; Module: '" + Program\ModuleName$ + "' exported to: '" + Program\ModuleFileName$ + "'." + #CRLF$)
-            Program\ModuleFileHandle = CreateFile(#PB_Any, Program\ModuleFileName$)
-            WriteModule(";- PBHGEN V" + #PBHGEN_VERSION$ + " [http://00laboratories.com/]" + #CRLF$)
-            WriteModule(";- '" + GetFilePart(Program\SourceFileName$) + "' module '" + Program\ModuleName$ + "' header, generated at " + FormatDate("%hh:%ii:%ss %dd.%mm.%yyyy", Date()) + "." + #CRLF$)
-            WriteModule(#CRLF$)
+            WriteHeader("CompilerEndIf" + #CRLF$ + "CompilerIf #PB_Compiler_Module = " + #DQUOTE$ + Program\ModuleName$ + #DQUOTE$ + #CRLF$)
+          EndIf
+          ; Global -> Macro
+          If IsBeginMacro(Line$)
+            Program\CurrentState = #PBHGEN_STATE_MACRO
+          EndIf
+          
+        Case #PBHGEN_STATE_MACRO
+          ; Global Macro -> EndMacro
+          If IsEndMacro(Line$)
+            Program\CurrentState = #PBHGEN_STATE_GLOBAL
           EndIf
           
         Case #PBHGEN_STATE_PROCEDURE
@@ -374,12 +393,22 @@ Procedure ParseLine(Line$)
             Program\CurrentState = #PBHGEN_STATE_MODULE_PROCEDURE
             Line$ = ParseProcedure(Line$)
             Line$ = FilterArguments(Line$)
-            WriteModule(Line$ + #CRLF$)
+            WriteHeader(Line$ + #CRLF$)
           EndIf
           ; Module -> EndModule
           If IsEndModule(Line$)
             Program\CurrentState = #PBHGEN_STATE_GLOBAL
-            CloseFile(Program\ModuleFileHandle)
+            WriteHeader("CompilerEndIf" + #CRLF$ + "CompilerIf #PB_Compiler_Module = " + #DQUOTE$ + #DQUOTE$ + #CRLF$)
+          EndIf
+          ; Module -> Macro
+          If IsBeginMacro(Line$)
+            Program\CurrentState = #PBHGEN_STATE_MODULE_MACRO
+          EndIf
+          
+        Case #PBHGEN_STATE_MODULE_MACRO
+          ; Module -> EndMacro
+          If IsEndMacro(Line$)
+            Program\CurrentState = #PBHGEN_STATE_MODULE_GLOBAL
           EndIf
           
         Case #PBHGEN_STATE_MODULE_PROCEDURE
@@ -460,12 +489,14 @@ If Program\SourceFileHandle And Program\HeaderFileHandle
     ParseLine(CodeLines$(i))
   Next
   
+  WriteHeader("CompilerEndIf")
+  
   CloseFile(Program\HeaderFileHandle)
 Else
   End ; Unable to access the files required.
 EndIf
-; IDE Options = PureBasic 5.41 LTS (Windows - x86)
-; CursorPosition = 5
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 8
 ; Folding = ---
 ; EnableXP
 ; UseIcon = ..\_Resources [R]\Icons\headers.ico
