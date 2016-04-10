@@ -1,6 +1,6 @@
 ; --------------------------------------------
 ;  -- PureBasic Header Generator           --
-;  -- copyright © 00laboratories 2013-2015 --
+;  -- copyright © 00laboratories 2013-2016 --
 ;  -- http://00laboratories.com/           --
 ; --------------------------------------------
 ;XIncludeFile #PB_Compiler_File + "i" ;- PBHGEN
@@ -19,6 +19,7 @@ Structure ProgramData
   CurrentState.a          ; global state flag to identify where we are in syntax.
   
   ModuleName$             ; the name of the module when parsing a module.
+  IsSpiderBasic.a         ; whether the source belongs to spider basic.
 EndStructure
 Global Program.ProgramData
 
@@ -34,7 +35,7 @@ EndEnumeration
 Program\CurrentLineNumber = 0
 Program\CurrentState = #PBHGEN_STATE_GLOBAL
 
-#PBHGEN_VERSION$ = "5.31e"
+#PBHGEN_VERSION$ = "5.42"
 
 
 
@@ -441,9 +442,14 @@ Else
   Next
 EndIf
 
-If Not GetExtensionPart(Program\SourceFileName$) = "pb"
+If GetExtensionPart(Program\SourceFileName$) = "pb"
+  Program\IsSpiderBasic = #False
+ElseIf GetExtensionPart(Program\SourceFileName$) = "sb"
+  Program\IsSpiderBasic = #True
+Else
   End
 EndIf
+
 Program\HeaderFileName$ = Program\SourceFileName$ + "i"
 ; -----------------------------------------------------------------------------
 Program\SourceFileHandle = ReadFile(#PB_Any, Program\SourceFileName$)
@@ -496,7 +502,8 @@ Else
   End ; Unable to access the files required.
 EndIf
 ; IDE Options = PureBasic 5.42 LTS (Windows - x86)
-; CursorPosition = 8
+; CursorPosition = 451
+; FirstLine = 418
 ; Folding = ---
 ; EnableXP
 ; UseIcon = ..\_Resources [R]\Icons\headers.ico
