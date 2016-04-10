@@ -1,6 +1,6 @@
  --------------------------------------------
   -- PureBasic Header Generator           --
-  -- copyright © 00laboratories 2013-2015 --
+  -- copyright © 00laboratories 2013-2016 --
   -- http://00laboratories.com/           --
  --------------------------------------------
 
@@ -13,7 +13,12 @@ Usage:
 		* At Arguments type "%FILE" without the quotes.
 		* At Event to trigger the tool select "Sourcecode Saved"
 	3. Ensure you include your headers in the Source using:
-		XIncludeFile #PB_Compiler_File + "i" ;- PBHGEN
+		IncludeFile #PB_Compiler_File + "i" ;- PBHGEN
+	4. To use automatic header generation in modules also use:
+		Module MyModule
+		  IncludeFile #PB_Compiler_File + "i" ;- PBHGEN
+		  ...
+		EndModule
 		
 Important:
 	At the moment if you wish to have a procedure with structured List/Array/Map arguments,
@@ -21,6 +26,15 @@ Important:
 	This does not apply when using basic types and is a limitation of PureBasic.
 
 Version:
+5.42
+Added SpiderBasic header generation support.
+5.31e
+Fixed a comment after EndProcedure / EndModule / EndMacro skipping the next procedure declaration.
+Now ignoring content between Macro / EndMacro statements.
+5.31d
+Fixed case where the compiler directives failed when a module is declared above global procedures.
+5.31c
+Using compiler directives to remove the need of multiple files for modules.
 5.31b
 Improved parsing engine to comply with latest PureBasic syntax.
 Optimized header file content and size.

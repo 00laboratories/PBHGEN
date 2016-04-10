@@ -1,4 +1,4 @@
-XIncludeFile #PB_Compiler_File + "i" ;- PBHGEN
+IncludeFile #PB_Compiler_File + "i" ;- PBHGEN
 
 ; This is weird
 Procedure NormalEmptyProcedure()
@@ -12,7 +12,7 @@ EndProcedure
 ;EndProcedure
 
 Procedure WithOptionalArguments(heh.l, Something$="Procedure WithOptionalArguments(Something$)" + "lol")
-  
+  MultiLine(0,0,0,0)
 EndProcedure
 
 ProcedureC StructureThing(*Hello.SYSTEM_INFO, *Okay.SYSTEM_ALARM_ACE)
@@ -27,6 +27,14 @@ Procedure BracketStuff(String$ = "heh" + Chr(50), Okay.l = 50)
   
 EndProcedure
 
+DeclareModule EmptyModuleWithoutProcedures
+  
+EndDeclareModule
+
+Module EmptyModuleWithoutProcedures
+  
+EndModule
+
 Procedure.i MultiLine(   _nbNiveaux.u,
                            numNiveauDepart.u,
                           _nbViesDepart.a,
@@ -36,13 +44,23 @@ Procedure.i MultiLine(   _nbNiveaux.u,
 
 EndProcedure
 
+Macro FUNNY1
+  Procedure This#Macro#Functon1()
+    
+  EndProcedure
+  Procedure This#Macro#Functon2()
+    
+  EndProcedure;COMMENT
+EndMacro
+Macro FUNNY2() : Procedure God#No!() : Debug "heh" : EndProcedure : EndMacro
+
 Runtime Procedure RuntimeProc(lol.l)
   
 EndProcedure
 
-ProcedureDLL DLLProcedure()
+    ProcedureDLL DLLProcedure()
   
-EndProcedure
+  : EndProcedure ; comment
 
 ProcedureCDLL CDLLProcedure()
   
@@ -57,22 +75,38 @@ DeclareModule TestA
 EndDeclareModule
 
 Module TestA
-  XIncludeFile #PB_Compiler_Filename + "." + #PB_Compiler_Module + ".pbi" ;- PBHGEN
+  IncludeFile #PB_Compiler_File + "i" ;- PBHGEN
   
   Global String$ = ""
   
   Procedure Func1()
     Debug #PB_Compiler_Module
+    Func2()
   EndProcedure
+  
+  Macro FUNNY3() : Procedure God#Yes!() : Debug "cwap" : EndProcedure : EndMacro
   
   Procedure Func2()
     TestA::String$ = "OL"
     Debug TestA::String$
     TestA::Func1()
   EndProcedure
+  
+  Procedure A() : PeekS(*lol) : EndProcedure : ;Procedure B() : PeekA(*pff) : EndProcedure
+EndModule;COMMENT
+
+DeclareModule TestB
+  Declare FuncHurrDurr(Cheese$ = "I love sandwhiche~")
+EndDeclareModule
+
+Module TestB
+  IncludeFile #PB_Compiler_File + "i" ;- PBHGEN
+  
+  Procedure FuncHurrDurr(Cheese$ = "I love sandwhiche~")
+    
+  EndProcedure
 EndModule
-; IDE Options = PureBasic 5.31 (Windows - x86)
-; CursorPosition = 72
-; FirstLine = 27
-; Folding = ---
+; IDE Options = PureBasic 5.42 LTS (Windows - x86)
+; CursorPosition = 27
+; Folding = -----
 ; EnableXP
