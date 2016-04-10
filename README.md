@@ -3,13 +3,15 @@
 Will read a PureBasic source file (.pb) and generate a header out of it (.pbi).
 Declare statements are generated for every procedure automatically.
 
+This program also works with SpiderBasic.
+
 ### Useful Links ###
 
 * [Project HomePage](http://00laboratories.com/downloads/dl-pbhgen/)
 
-* [Precompiled Binary for PureBasic 5.11](http://00laboratories.com/download_file/view/21/139/)
+* [Precompiled Binary for PureBasic 5.42](http://00laboratories.com/download_file/6)
 
-* [Precompiled Binary for PureBasic 5.31 and 5.41](http://00laboratories.com/download_file/view/52/139/)
+* [Precompiled Binary for PureBasic 5.42 - mirror](https://dl.dropboxusercontent.com/u/19541374/00laboratories/downloads/PBHGEN/PBHGEN.7z)
 
 * [Official PureBasic Thread](http://www.purebasic.fr/english/viewtopic.php?f=27&t=53414)
 
@@ -37,6 +39,10 @@ This does not apply when using basic types and is a limitation of PureBasic.
 PureBasic is a great language but I was always annoyed about the fact I could never choose where I would locate my Procedures, if I wished to use a Procedure somewhere I would have to move it above of the Procedure that was going to call it, the Declare statement allows to tell the compiler specific Procedures are going to exist and to find them but writing them over and over, fixing arguments is not only a pain but makes your source look like a mess. That's the reason I required an automatic header generator for PureBasic. I hope you too will enjoy the new freedom thanks to this little tool!
 
 ### Changes ###
+
+**V5.42**
+
+* Added SpiderBasic header generation support.
 
 **V5.31e**
 
