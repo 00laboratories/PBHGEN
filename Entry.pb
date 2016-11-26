@@ -1,8 +1,9 @@
-; --------------------------------------------
-;  -- PureBasic Header Generator           --
-;  -- copyright © 00laboratories 2013-2016 --
-;  -- http://00laboratories.com/           --
-; --------------------------------------------
+; ----------------------------------------------------------------------- ;
+;  -- PureBasic Header Generator                                      --  ;
+;  -- Copyright © 00laboratories 2013-2016                            --  ;
+;  -- http://00laboratories.com/                                      --  ;
+;  -- License: Creative Commons Attribution 4.0 International License --  ;
+; ----------------------------------------------------------------------- ;
 ;XIncludeFile #PB_Compiler_File + "i" ;- PBHGEN
 
 ;XIncludeFile "Test.pb"
@@ -35,7 +36,7 @@ EndEnumeration
 Program\CurrentLineNumber = 0
 Program\CurrentState = #PBHGEN_STATE_GLOBAL
 
-#PBHGEN_VERSION$ = "5.42"
+#PBHGEN_VERSION$ = "5.43"
 
 
 
@@ -501,9 +502,8 @@ If Program\SourceFileHandle And Program\HeaderFileHandle
 Else
   End ; Unable to access the files required.
 EndIf
-; IDE Options = PureBasic 5.42 LTS (Windows - x86)
-; CursorPosition = 451
-; FirstLine = 418
+; IDE Options = PureBasic 5.43 LTS (Windows - x64)
+; CursorPosition = 38
 ; Folding = ---
 ; EnableXP
 ; UseIcon = ..\_Resources [R]\Icons\headers.ico
