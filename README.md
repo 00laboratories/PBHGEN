@@ -15,11 +15,11 @@ This program also works with [SpiderBasic](https://www.spiderbasic.com/).
 
 ### Usage Instructions
 
-Under “**Tools**” in the PureBasic IDE add a new tool called “`PBHGEN`”:
+Under **Tools** in the PureBasic IDE add a new tool called `PBHGEN`:
 
 -   At **Commandline** select your copy of `PBHGEN.exe`.
--   At **Arguments** type `%FILE`.
--   At **Event to trigger the tool** select “**Sourcecode Saved**”.
+-   At **Arguments** type `"%FILE"`.
+-   At **Event to trigger the tool** select **Sourcecode Saved**.
 
 Ensure you include your headers in the Source using:
 
