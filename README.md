@@ -31,7 +31,7 @@ To use automatic header generation also in modules use:
 
 ``` {.purebasic}
 Module MyModule
-  IncludeFile #PB_Compiler_File + ".i" ;- PBHGEN
+  IncludeFile #PB_Compiler_File + "i" ;- PBHGEN
 EndModule
 ```
 
