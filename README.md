@@ -9,7 +9,7 @@ This program also works with [SpiderBasic](https://www.spiderbasic.com/).
 
 -   [Project HomePage](https://00laboratories.com/downloads/software/purebasic-header-generator)
 
--   [Precompiled Binary for PureBasic 5.71](https://00laboratories.com/wp-content/uploads/2018/06/PBHGEN542.7z)
+-   [Precompiled Binary for PureBasic 5.71](https://00laboratories.com/wp-content/uploads/2019/09/PBHGEN571.7z)
 
 -   [Official PureBasic Thread](http://www.purebasic.fr/english/viewtopic.php?f=27&t=53414)
 
