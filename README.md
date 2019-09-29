@@ -9,7 +9,7 @@ This program also works with [SpiderBasic](https://www.spiderbasic.com/).
 
 -   [Project HomePage](https://00laboratories.com/downloads/software/purebasic-header-generator)
 
--   [Precompiled Binary for PureBasic 5.42](https://00laboratories.com/wp-content/uploads/2018/06/PBHGEN542.7z)
+-   [Precompiled Binary for PureBasic 5.71](https://00laboratories.com/wp-content/uploads/2018/06/PBHGEN542.7z)
 
 -   [Official PureBasic Thread](http://www.purebasic.fr/english/viewtopic.php?f=27&t=53414)
 
@@ -44,6 +44,10 @@ At the moment if you wish to have a procedure with structured List/Array/Map arg
 PureBasic is a great language but I was always annoyed about the fact I could never choose where I would locate my Procedures, if I wished to use a Procedure somewhere I would have to move it above of the Procedure that was going to call it, the Declare statement allows to tell the compiler specific Procedures are going to exist and to find them but writing them over and over, fixing arguments is not only a pain but makes your source look like a mess. That’s the reason I required an automatic header generator for PureBasic. I hope you too will enjoy the new freedom thanks to this little tool!
 
 ### Changes
+
+**V5.71**
+
+-   Fixed double colon operator inside procedure arguments `OnVstMain(*Effect.Vst2::AEffect)`.
 
 **V5.42**
 

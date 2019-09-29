@@ -96,17 +96,26 @@ Module TestA
 EndModule;COMMENT
 
 DeclareModule TestB
-  Declare FuncHurrDurr(Cheese$ = "I love sandwhiche~")
+  Declare FuncHurrDurr(Cheese$ = "I love::sandwhiche~")
+  
+  Structure AEffect
+    Value.a
+  EndStructure
 EndDeclareModule
 
 Module TestB
   IncludeFile #PB_Compiler_File + "i" ;- PBHGEN
   
-  Procedure FuncHurrDurr(Cheese$ = "I love sandwhiche~")
+  Procedure FuncHurrDurr(Cheese$ = "I love::sandwhiche~")
     
   EndProcedure
 EndModule
-; IDE Options = PureBasic 5.42 LTS (Windows - x86)
-; CursorPosition = 27
+
+Procedure OnVstMain(*Effect.TestB::AEffect)
+  Debug "Cheese": :;::Debug "LOL"
+EndProcedure
+; IDE Options = PureBasic 5.71 LTS (Windows - x86)
+; CursorPosition = 101
+; FirstLine = 74
 ; Folding = -----
 ; EnableXP

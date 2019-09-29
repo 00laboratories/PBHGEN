@@ -1,6 +1,6 @@
 ; ----------------------------------------------------------------------- ;
 ;  -- PureBasic Header Generator                                      --  ;
-;  -- Copyright © 00laboratories 2013-2016                            --  ;
+;  -- Copyright © 00laboratories 2013-2019                            --  ;
 ;  -- http://00laboratories.com/                                      --  ;
 ;  -- License: Creative Commons Attribution 4.0 International License --  ;
 ; ----------------------------------------------------------------------- ;
@@ -36,7 +36,7 @@ EndEnumeration
 Program\CurrentLineNumber = 0
 Program\CurrentState = #PBHGEN_STATE_GLOBAL
 
-#PBHGEN_VERSION$ = "5.43"
+#PBHGEN_VERSION$ = "5.71"
 
 
 
@@ -53,10 +53,48 @@ Procedure ExplodeStringArray(Array a$(1), s$, delimeter$)
   ProcedureReturn count ;return count of substrings
 EndProcedure
 
-
-
-
-
+; -----------------------------------------------------------------------------
+; * explodes a line of code with module :: and colon : detection.
+; -----------------------------------------------------------------------------
+; INPUT:
+; "line1:myModule::Test():line3:*someModule::Wat::Where():line5"
+; -----------------------------------------------------------------------------
+; RESULT:
+; line1
+; myModule::Test()
+; line3
+; *someModule::Wat::Where()
+; line5
+; -----------------------------------------------------------------------------
+Procedure ExplodeCodeLine(Array Results$(1), Code$)
+  Protected Results.l = 0
+  Protected Length.l = Len(Code$)
+  Protected Index.l = 1
+  Protected Accumulator$ = ""
+  For Index = 1 To Length
+    Protected IndexColon.l = FindString(Code$, ":", Index)
+    Protected IndexModule.l = FindString(Code$, "::", Index)
+    ; no colon could be found at this point.
+    If IndexColon = 0 And IndexModule = 0
+      ReDim Results$(Results)
+      Results$(Results) = Accumulator$ + Mid(Code$, Index, Length - Index + 1) : Results + 1
+      Break
+    EndIf
+    ; currently at a module separator:
+    If IndexColon = IndexModule
+      Accumulator$ + Mid(Code$, Index, IndexColon - Index) + "::"
+      Index + (IndexColon - Index) + 1
+    ; currently at a colon separator:
+    Else
+      ReDim Results$(Results)
+      Results$(Results) = Accumulator$ + Mid(Code$, Index, IndexColon - Index) : Results + 1
+      Accumulator$ = ""
+      Index + (IndexColon - Index)
+    EndIf
+  Next
+  
+  ProcedureReturn Results
+EndProcedure
 
 ; Whenever the line ends with a comma you will want to do this.
 Global ContinueNextLine.a = #False
@@ -150,10 +188,6 @@ Procedure.s FilterArguments(Line$)
       
       If Not IsInString And NextChar = ")"
         Skipping = #False
-      EndIf
-      
-      If Not IsInString And NextChar = ":" ; statement seperator
-        Break
       EndIf
       
       If Not IsInString And NextChar = ";" ; comment
@@ -462,7 +496,7 @@ If Program\SourceFileHandle And Program\HeaderFileHandle
     Program\CurrentLine$ = ReadString(Program\SourceFileHandle)
     ; STOP: First we will seperate on colons to parse every "line" of code properly:
     Dim CodeChunks$(0)
-    ExplodeStringArray(CodeChunks$(), Program\CurrentLine$, ":")
+    ExplodeCodeLine(CodeChunks$(), Program\CurrentLine$)
     
     ; While iterating below, if we encounter a comment then after each colon a semicolon must be added to keep it a comment.
     Define CommentDetected.a = #False
@@ -502,8 +536,9 @@ If Program\SourceFileHandle And Program\HeaderFileHandle
 Else
   End ; Unable to access the files required.
 EndIf
-; IDE Options = PureBasic 5.43 LTS (Windows - x64)
-; CursorPosition = 38
+; IDE Options = PureBasic 5.71 LTS (Windows - x86)
+; CursorPosition = 192
+; FirstLine = 170
 ; Folding = ---
 ; EnableXP
 ; UseIcon = ..\_Resources [R]\Icons\headers.ico
