@@ -1,6 +1,6 @@
  --------------------------------------------
   -- PureBasic Header Generator           --
-  -- copyright © 00laboratories 2013-2016 --
+  -- copyright © 00laboratories 2013-2019 --
   -- http://00laboratories.com/           --
  --------------------------------------------
 
