@@ -508,8 +508,8 @@ If Program\SourceFileHandle And Program\HeaderFileHandle
       CodeLines$(CodeLinesCount) = Trim(CodeChunks$(i)) ; Trim whitespace from beginning / end of line.
       
       ; Remove "Runtime" keyword as it's not important.
-      If LCase(Left(CodeChunks$(i), 8)) = "runtime "
-        CodeLines$(CodeLinesCount) = Trim(Mid(CodeChunks$(i), 8)) ; Trim whitespace from beginning / end of line.
+      If LCase(Left(CodeLines$(CodeLinesCount), 8)) = "runtime "
+        CodeLines$(CodeLinesCount) = Trim(Mid(CodeLines$(CodeLinesCount), 8)) ; Trim whitespace from beginning / end of line.
       EndIf
       
       ; Handle comments after a colon was detected.
@@ -536,9 +536,8 @@ If Program\SourceFileHandle And Program\HeaderFileHandle
 Else
   End ; Unable to access the files required.
 EndIf
-; IDE Options = PureBasic 5.71 LTS (Windows - x86)
-; CursorPosition = 192
-; FirstLine = 170
+; IDE Options = PureBasic 5.72 (Windows - x64)
+; CursorPosition = 8
 ; Folding = ---
 ; EnableXP
 ; UseIcon = ..\_Resources [R]\Icons\headers.ico
