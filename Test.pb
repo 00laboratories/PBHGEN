@@ -92,7 +92,7 @@ Module TestA
     TestA::Func1()
   EndProcedure
   
-  Procedure A() : PeekS(*lol) : EndProcedure : ;Procedure B() : PeekA(*pff) : EndProcedure
+  Runtime Procedure A() : PeekS(*lol) : EndProcedure : ;Procedure B() : PeekA(*pff) : EndProcedure
 EndModule;COMMENT
 
 DeclareModule TestB
@@ -106,7 +106,7 @@ EndDeclareModule
 Module TestB
   IncludeFile #PB_Compiler_File + "i" ;- PBHGEN
   
-  Procedure FuncHurrDurr(Cheese$ = "I love::sandwhiche~")
+  Runtime Procedure FuncHurrDurr(Cheese$ = "I love::sandwhiche~")
     
   EndProcedure
 EndModule
@@ -114,8 +114,9 @@ EndModule
 Procedure OnVstMain(*Effect.TestB::AEffect)
   Debug "Cheese": :;::Debug "LOL"
 EndProcedure
-; IDE Options = PureBasic 5.71 LTS (Windows - x86)
-; CursorPosition = 101
-; FirstLine = 74
+; IDE Options = PureBasic 5.72 (Windows - x64)
+; CursorPosition = 77
+; FirstLine = 66
 ; Folding = -----
 ; EnableXP
+; Executable = build\PBHGEN.exe
