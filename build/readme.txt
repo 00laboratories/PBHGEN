@@ -26,6 +26,8 @@ Important:
 	This does not apply when using basic types and is a limitation of PureBasic.
 
 Version:
+5.72
+Fixed runtime keyword not getting detected properly.
 5.71
 Fixed double colon operator inside procedure arguments OnVstMain(*Effect.Vst2::AEffect).
 5.42

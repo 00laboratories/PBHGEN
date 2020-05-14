@@ -1,6 +1,6 @@
 ; ----------------------------------------------------------------------- ;
 ;  -- PureBasic Header Generator                                      --  ;
-;  -- Copyright © 00laboratories 2013-2019                            --  ;
+;  -- Copyright © 00laboratories 2013-2020                            --  ;
 ;  -- http://00laboratories.com/                                      --  ;
 ;  -- License: Creative Commons Attribution 4.0 International License --  ;
 ; ----------------------------------------------------------------------- ;
@@ -36,7 +36,7 @@ EndEnumeration
 Program\CurrentLineNumber = 0
 Program\CurrentState = #PBHGEN_STATE_GLOBAL
 
-#PBHGEN_VERSION$ = "5.71"
+#PBHGEN_VERSION$ = "5.72"
 
 
 
@@ -536,7 +536,7 @@ If Program\SourceFileHandle And Program\HeaderFileHandle
 Else
   End ; Unable to access the files required.
 EndIf
-; IDE Options = PureBasic 5.72 (Windows - x64)
+; IDE Options = PureBasic 5.72 (Windows - x86)
 ; CursorPosition = 8
 ; Folding = ---
 ; EnableXP
