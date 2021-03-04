@@ -114,9 +114,9 @@ EndModule
 Procedure OnVstMain(*Effect.TestB::AEffect)
   Debug "Cheese": :;::Debug "LOL"
 EndProcedure
-; IDE Options = PureBasic 5.72 (Windows - x64)
-; CursorPosition = 77
-; FirstLine = 66
+; IDE Options = PureBasic 5.73 LTS (Windows - x86)
+; CursorPosition = 2
+; FirstLine = 76
 ; Folding = -----
 ; EnableXP
 ; Executable = build\PBHGEN.exe

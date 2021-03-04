@@ -10,7 +10,7 @@ Description:
 Usage:
 	1. Under "Tools" in the PureBasic IDE add a new tool called "PBHGEN".
 	2.	* At Commandline select PBHGEN.exe
-		* At Arguments type "%FILE" without the quotes.
+		* At Arguments type "%FILE" (with quotes).
 		* At Event to trigger the tool select "Sourcecode Saved"
 	3. Ensure you include your headers in the Source using:
 		IncludeFile #PB_Compiler_File + "i" ;- PBHGEN
@@ -26,6 +26,8 @@ Important:
 	This does not apply when using basic types and is a limitation of PureBasic.
 
 Version:
+5.73
+Removed the timestamp and version info in generated headers to make them git-friendly.
 5.72
 Fixed runtime keyword not getting detected properly.
 5.71

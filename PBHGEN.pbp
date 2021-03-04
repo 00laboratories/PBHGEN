@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://www.purebasic.com/namespace" version="1.0" creator="PureBasic 5.72 (Windows - x86)">
+<project xmlns="http://www.purebasic.com/namespace" version="1.0" creator="PureBasic 5.73 LTS (Windows - x86)">
   <section name="config">
     <options closefiles="1" openmode="0" name="PBHGEN"/>
   </section>
   <section name="data">
     <explorer view="" pattern="0"/>
     <log show="1"/>
-    <lastopen date="2020-05-14 13:32" user="Henry00" host="HENRY00-PC"/>
+    <lastopen date="2021-03-04 13:17" user="Henry" host="DESKTOP-30Q53VP"/>
   </section>
   <section name="files">
     <file name="Entry.pb">
       <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="+"/>
-      <fingerprint md5="688fb8f1094690b23205d34b19fccdaf"/>
+      <fingerprint md5="e6da015beb5c8dcd8b110cb252713be1"/>
     </file>
   </section>
   <section name="targets">
@@ -24,16 +24,16 @@
       <options xpskin="1" debug="1"/>
       <icon enable="1">resources\headers.ico</icon>
       <versioninfo enable="1">
-        <field0 value="1,5,7,2"/>
-        <field1 value="1,5,7,2"/>
+        <field0 value="1,5,7,3"/>
+        <field1 value="1,5,7,3"/>
         <field2 value="00laboratories"/>
         <field3 value="PBHGEN"/>
-        <field4 value="572"/>
-        <field5 value="572"/>
+        <field4 value="573"/>
+        <field5 value="573"/>
         <field6 value="PureBasic Header Generator"/>
         <field7 value="PBHGEN"/>
         <field8 value="PBHGEN.exe"/>
-        <field9 value="Copyright © 00laboratories 2013 - 2020"/>
+        <field9 value="Copyright © 00laboratories 2013 - 2021"/>
         <field13 value="henry00@live.nl"/>
         <field14 value="http://00laboratories.com/"/>
         <field15 value="VOS_NT_WINDOWS32"/>

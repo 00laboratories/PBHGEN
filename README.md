@@ -9,7 +9,7 @@ This program also works with [SpiderBasic](https://www.spiderbasic.com/).
 
 -   [Project HomePage](https://00laboratories.com/downloads/software/purebasic-header-generator)
 
--   [Precompiled Binary for PureBasic 5.72](https://00laboratories.com/wp-content/uploads/2020/05/PBHGEN572.7z)
+-   [Precompiled Binary for PureBasic 5.73](https://00laboratories.com/wp-content/uploads/2021/03/PBHGEN573.7z)
 
 -   [Official PureBasic Thread](http://www.purebasic.fr/english/viewtopic.php?f=27&t=53414)
 
@@ -18,7 +18,7 @@ This program also works with [SpiderBasic](https://www.spiderbasic.com/).
 Under **Tools** in the PureBasic IDE add a new tool called `PBHGEN`:
 
 -   At **Commandline** select your copy of `PBHGEN.exe`.
--   At **Arguments** type `"%FILE"`.
+-   At **Arguments** type `"%FILE"` (with quotes).
 -   At **Event to trigger the tool** select **Sourcecode Saved**.
 
 Ensure you include your headers in the Source using:
@@ -44,6 +44,10 @@ At the moment if you wish to have a procedure with structured List/Array/Map arg
 PureBasic is a great language but I was always annoyed about the fact I could never choose where I would locate my Procedures, if I wished to use a Procedure somewhere I would have to move it above of the Procedure that was going to call it, the Declare statement allows to tell the compiler specific Procedures are going to exist and to find them but writing them over and over, fixing arguments is not only a pain but makes your source look like a mess. That’s the reason I required an automatic header generator for PureBasic. I hope you too will enjoy the new freedom thanks to this little tool!
 
 ### Changes
+
+**V5.73**
+
+-   Removed the timestamp and version info in generated headers to make them git-friendly.
 
 **V5.72**
 
